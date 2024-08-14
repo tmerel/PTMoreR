@@ -1,5 +1,5 @@
 # PTMoreR<img src="PTMoreR_Logo.png" align="right" height="200" width="200"/>
-PTMoreR enables a motif-centric proteomic mapping and annotation of post-translational modifications across mammalian species
+PTMoreR-enabled cross-species PTM mapping and comparative phosphoproteomics across mammals
 
 ## Brief Description
 **<font size='5'> PTMoreR </font>** (**P**ost-**t**ranslational **m**odification **or**tholog align**er**) is a web-based and stand-alone tool for PTM researchers and proteomics society. PTMoreR is not merely a phosphosite BLAST tool; instead, it considers the surrounding amino acid sequence of PTM sites during BLAST, enabling a motif-centric analysis across species. Additionally, PTMoreR supports a swift site-specific functional enrichment and network analysis benefiting from the well-characterized human PTM proteomic datasets. This software (online version) is available here: [https://yslproteomics.shinyapps.io/PTMoreR](https://yslproteomics.shinyapps.io/PTMoreR). **Please note**: If the data are too large, we recommend users to intall this tool locally. Local installation can be found below.
@@ -8,7 +8,7 @@ PTMoreR enables a motif-centric proteomic mapping and annotation of post-transla
 <img src="Figure1app.png" align="center" height="378" width="900"/>
 
 ## How to use
-A detailed introduction of this software can be found in the [Supplementary Notes](https://github.com/wangshisheng/PTMoreR/blob/master/SupplementaryNotes.pdf).
+A detailed introduction of this software can be found in the [Manual](https://github.com/wangshisheng/PTMoreR/blob/master/manual.pdf).
 
 ## Run it locally
 This tool is developed with R, so if you want to run it locally, you may do some preparatory work:  
