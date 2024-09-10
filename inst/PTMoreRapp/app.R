@@ -778,7 +778,7 @@ server <- function(input, output,session) {
   metabopath_spedf_paste<<-paste(metabopath_spedf$Organism.ID,metabopath_spedf$Organism,sep = "-")
   updateSelectizeInput(session, "metabopathspeciesselect", choices = c("",metabopath_spedf_paste),
                        server = T)
-  metabopath_spedf_paste1<-metabopath_spedf_paste[-2]
+  metabopath_spedf_paste1<-metabopath_spedf_paste#[-2]
   metabopath_spedf_paste1<-metabopath_spedf_paste1[c(2,1,3:length(metabopath_spedf_paste1))]
   updateSelectizeInput(session, "blast2otherselect", choices = c(metabopath_spedf_paste1),
                        server = T)
