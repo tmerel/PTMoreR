@@ -111,9 +111,9 @@ ui <- dashboardPage(
                 div(style="font-size:110%",HTML("&nbsp;&nbsp;&nbsp;&nbsp;<b>Step 6. Interaction Plot.</b> This step will visualize the expression of modification sites on interacting proteins on the basis of protein-protein interaction data."))
               )
             ),
-            #div(style="margin-left:27%;font-size:120%",
-            #    HTML("Enter your email here (Optional, please also check junk mail if possible):<br />")),
-            #div(style="margin-left:32%;margin-top:-10px;",textInput("emailto","",value = "",placeholder="wukongomics@163.com")),
+            div(style="margin-left:27%;font-size:120%",
+                HTML("Enter your email here (Optional, please also check junk mail if possible):<br />")),
+            div(style="margin-left:32%;margin-top:-10px;",textInput("emailto","",value = "",placeholder="wukongomics@163.com")),
             #fluidRow(
             #  column(
             #    6,
@@ -1951,7 +1951,13 @@ server <- function(input, output,session) {
           queryindex2<-blaseresdf$subject_id[grepproindex][1]
           subjectpro<-as.data.frame(datafastahuman[readfastasubjnames==queryindex2])$x
           seqnchar<-nchar(subjectpro)
-          if(length(seqnchar)>0){
+          pro_seqdfnames<-unlist(lapply(rownames(pro_seqdf),function(x) strsplit(x,"\\|")[[1]][2]))
+          if(sum(is.na(pro_seqdfnames))>n_data_fasta/2){
+            pro_seqdfnames<-unlist(lapply(rownames(pro_seqdf),function(x) strsplit(x,"\\ ")[[1]][1]))
+          }
+          pro_seqdfxx<-pro_seqdf[pro_seqdfnames==queryindex1,]
+          pro_seqdfxx1<-identical(pro_seqdfxx,gsub("-","",blastseqlist[[queryindex1]][1]))
+          if(length(seqnchar)>0 & pro_seqdfxx1){
             if(TRUE){#isolate(input$preblastif)
               alignquerydf<-blastseqlist[[queryindex1]]
             }else{
@@ -2223,6 +2229,25 @@ server <- function(input, output,session) {
                                       "Blasted Combined Protein Identifier", 
                                       "Standard Peptides Matching Degree", 
                                       "Window Similarity", "BLOSUM50 Score")
+        }
+        emailtoid<<-input$emailto
+        if(emailtoid!=""){
+          timeemail<-Sys.time()
+          #prorankdata<-imputaionyuanshiout()
+          write.csv(blastresout2xx,file = paste0("temp/","BlastToHuman_",as.numeric(timeemail),".csv"))
+          #write.csv(prorankdata[[proranks$Methods[1]]],file = paste0("/srv/shiny-server/wukong/cache/","ImpuattionData_",proranks$Methods[1],as.numeric(timeemail),".csv"))
+          library(reticulate)
+          source_python("sendemail.py")
+          messageinfo<-paste0(
+            "<html>Please click below links to download the results:<p><a href='https://yslproteomics.shinyapps.io/PTMoreR/",
+            paste0("temp/","BlastToHuman_",as.numeric(timeemail),".csv"),
+            "'>The Blast-to-Human Results based on the uploaded data.</a></p></html>"
+          )
+          sentemailRpy(
+            sender='wukongomics@163.com',receiver=emailtoid,
+            subject=paste('NAguideR results',timeemail),smtpserver='smtp.163.com',username='wukongomics@163.com',
+            password='WuKongOmics123',message=messageinfo
+          )
         }
         datatable(blastresout2xx, options = list(pageLength = 10,autoWidth = F))
       })
