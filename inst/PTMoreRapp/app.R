@@ -858,6 +858,7 @@ server <- function(input, output,session) {
     }else{
       datareadx<-dataread[,2,drop=F]
     }
+    datareadx[[1]]<-gsub("_","",datareadx[[1]])
     origidatatypex<-isolate(input$origidatatype)
     Peptides<-vector()
     if(origidatatypex=="MaxQuant"){
