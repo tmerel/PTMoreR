@@ -42,6 +42,7 @@ RUN Rscript -e 'pacman::p_load(type = "binary", scatterpie)'
 RUN Rscript -e 'pacman::p_load(type = "binary", plotfunction)'
 RUN Rscript -e 'pacman::p_load(type = "binary", mapplot)'
 RUN Rscript -e 'pacman::p_load(type = "binary", KinSwingR)'
+RUN Rscript -e 'pacman::p_load(type = "binary", gdata)'
 
 RUN Rscript -e 'install.packages("BiocManager"); BiocManager::install()'
 RUN Rscript -e 'BiocManager::install(c("msa", "systemfonts", "Biostrings", "GenomicFeatures", "GenomicRanges", "Rsamtools", "IRanges", "rtracklayer"))'
@@ -56,4 +57,4 @@ ENV SHELL="bash"
 
 EXPOSE 8989
 
-CMD ["Rscript", "-e", "devtools::load_all('/ptmore'); PTMoreR_app()"]
+CMD ["Rscript", "-e", "devtools::load_all("/ptmore"); library(PTMoreR); PTMoreR_app()"]
