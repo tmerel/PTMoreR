@@ -6,7 +6,7 @@ PTMoreR_app <- function(appDir=system.file('PTMoreRapp', package='PTMoreR'),host
 
 #' Pre-alignment.
 #' @export
-prealign<-function(data,datatype="Normal",central.amino.acid="ST",
+prealign<-function(data,datatype="Normal",central.amino.acid="STY",
                    label.of.modification="#",width=7,
                    species.fasta.file="10116.fasta"){
   library(Biostrings)

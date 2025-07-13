@@ -186,7 +186,7 @@ ui <- dashboardPage(
                     selectInput("origidatatype",h5("2. Data type:"),choices = c("Normal","MaxQuant","Spectronaut")),
                     bsTooltip("origidatatype",'The original post-translational modification (PTM) data obtained from which kind of search software. If you have processed the PTM data with standard format (e.g. NPT#Y#GSWFTEK), you should choose the "Normal", otherwise, if your PTM data are obtained from MaxQuant or Spectronaut, you should choose the relative type.',
                               placement = "right",options = list(container = "body")),
-                    textInput("centralres",h5("3. Central amino acid:"),value = "ST"),
+                    textInput("centralres",h5("3. Central amino acid:"),value = "STY"),
                     bsTooltip("centralres",'The central residue that users want to analyze, for example, phosphorylation motif analysis, can center on phosphorylated S, T or Y residues. If they want to analyze multi motif sites, here should be "STY".',
                               placement = "right",options = list(container = "body")),
                     div(id="centralresfuhao_div",textInput("centralresfuhao",h5("4. Label of modification:"),value = "#")),
@@ -1771,7 +1771,7 @@ server <- function(input, output,session) {
                       db_name = paste0(wuzhongother,"_db"), dbtype = "prot")
           dbx <- blast(paste0(wuzhongother,"_db"),type="blastp")
           seqx <- readAAStringSet(paste0("fasta/",wuzhong,".fasta"))
-          blast_best_other<-predict(dbx,seqx,BLAST_args = "-max_target_seqs 1 -num_threads 8")
+          blast_best_other<-predict(dbx,seqx,BLAST_args = "-max_target_seqs 5 -num_threads 8")
           colnames(blast_best_other)[1:3]<-c("query_id","subject_id","perc_identity")
           fwrite(blast_best_other,file = paste0("percentdatabase/",wuzhong,"_blast_best_",wuzhongother,".csv"))
           fwrite(blast_best_other,file = paste0("aligndatabase/",wuzhong,"_blast_best_",wuzhongother,".csv"))
