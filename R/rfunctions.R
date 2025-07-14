@@ -1,6 +1,6 @@
 #' Runs the PTMoreR Shiny web application.
 #' @export
-PTMoreR_app <- function(appDir=system.file('PTMoreRapp', package='PTMoreR'),host="127.0.0.1", port =8989) {
+PTMoreR_app <- function(appDir=system.file('PTMoreRapp', package='PTMoreR'),host="0.0.0.0", port =8989) {
   shiny::runApp(appDir=appDir,host=host,port=port)
 }
 
