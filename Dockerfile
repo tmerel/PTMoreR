@@ -57,4 +57,6 @@ ENV SHELL="bash"
 
 EXPOSE 8989
 
-CMD ["Rscript", "-e", "devtools::load_all("/ptmore"); library(PTMoreR); PTMoreR_app()"]
+RUN echo 'devtools::load_all("/ptmore"); library(PTMoreR); PTMoreR_app()' > /ptmore_app.R
+
+CMD ["/usr/bin/Rscript", "/ptmore_app.R"]
